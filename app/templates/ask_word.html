@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+    <p>
+        <h3 id='word'> {{ word }} </h3>
+    </p>
+    <p>
+      <input class="form-control" type="text" placeholder="response" id='response'>
+    </p>
+    <span id="response_checking"></span>
+    <br><br>
+    <span>
+      <a href="javascript:check_word(
+            '#word',
+            'response',
+            '#response_checking',
+            '{{direct}}');">Check</a>
+    </span>
+    <a href="{{url_for('ask_words', direct=direct, sorted_by=sorted_by)}}">Next</a>
+{% endblock %}

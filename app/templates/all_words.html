@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+<div>
+  {% for word in words %}
+     {% include '_another_word.html' %}
+  {% endfor %}
+
+  {% include '_next_prev_links.html' %}
+</div>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+      <a class="nav-item nav-link active" href="{{ url_for('add_new_words') }}">Add_new_words/<span class="sr-only">(current)</span></a>
+      <a class="nav-item nav-link" href="{{ url_for('download') }}">Download/</a>
+      <a class="nav-item nav-link" href="{{ url_for('upload_file') }}">Upload_words_from_file</a>
+    </div>
+  </div>
+</nav>
+
+<div>
+  {% for word in words %}
+     {% include '_word.html' %}
+  {% endfor %}
+
+  {% include '_next_prev_links.html' %}
+</div>
+{% endblock %}

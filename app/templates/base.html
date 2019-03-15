@@ -1,0 +1,67 @@
+{% extends 'bootstrap/base.html' %}
+
+{% block title %}
+    {% if title %}{{ title }} - Vocabulary Storage{% else %}Welcome to Vocabulary Storage{% endif %}
+{% endblock %}
+
+{% block navbar %}
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="{{ url_for('index') }}">Vocabulary Storage</a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                  <li><a href="{{ url_for('vocabulary') }}">Your Vocabulary</a></li>
+                  <li><a href="{{ url_for('test') }}">Test</a></li>
+                  <li><a href="{{ url_for('all_words') }}">All Words</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    {% if current_user.is_anonymous %}
+                    <li><a href="{{ url_for('login') }}">Login</a></li>
+                    {% else %}
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-info" role="alert">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        {% block app_content %}{% endblock %}
+    </div>
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  <script>
+    function check_word(source_word_elem, response_word_id, dest_elem, direct){
+      $(dest_elem).html('<img src="{{ url_for('static', filename='loading.gif') }}">');
+      $.post('/check_word',{
+        word: $(source_word_elem).text(),
+        response: document.getElementById(response_word_id).value,
+        direct: direct
+      }).done(function(response){
+        $(dest_elem).text(response['result'])
+      }).fail(function(){
+        $(dest_elem).text('Error: Could not contact server.')
+      })
+    }
+  </script>
+{% endblock %}
