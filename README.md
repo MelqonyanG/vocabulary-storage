@@ -13,7 +13,7 @@ App vocabulary-storage allow:
   - add words to your vocabulary from other's
 ### Tech
 
-Dillinger uses a number of open source projects to work properly:
+vocabulary-storage uses a number of open source projects to work properly:
 
 * Python3
 * Flask
